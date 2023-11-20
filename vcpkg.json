@@ -1,0 +1,21 @@
+{
+  "name": "cs2-cheat",
+  "version-string": "1.0",
+  "builtin-baseline": "0c20b2a97c390e106150837042d921b0939e7ecb",
+  "dependencies": [
+    "spdlog",
+    "minhook",
+    "freetype",
+    "lunasvg",
+    "xorstr",
+    {
+      "name": "imgui",
+      "features": [
+        "dx11-binding",
+        "win32-binding",
+        "freetype",
+        "freetype-lunasvg"
+      ]
+    }
+  ]
+}

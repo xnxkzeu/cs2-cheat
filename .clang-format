@@ -1,0 +1,54 @@
+---
+Standard: c++20
+SpacesInSquareBrackets: true
+SpacesInParentheses: true
+TabWidth: 4
+UseTab: Always
+SpacesInAngles: Always
+SpacesInCStyleCastParentheses: true
+SpacesInConditionalStatement: true
+SpaceInEmptyParentheses: true
+SpaceInEmptyBlock: true
+ReferenceAlignment: Pointer
+PointerAlignment: Left
+Language: Cpp
+LambdaBodyIndentation: Signature
+InsertBraces: false
+IndentCaseLabels: true
+IndentCaseBlocks: false
+CompactNamespaces: false
+IndentWidth: 4
+IndentAccessModifiers: false
+AccessModifierOffset: -4
+SpaceBeforeInheritanceColon: true
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeParens: ControlStatements
+SpaceBeforeAssignmentOperators: true
+SpaceAfterTemplateKeyword: false
+SpaceAfterCStyleCast: false
+SpaceBeforeCaseColon: false
+SpaceBeforeCpp11BracedList: true
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: true
+BitFieldColonSpacing: Both
+BraceWrapping:
+  BeforeLambdaBody: true
+  IndentBraces: false
+BreakBeforeBraces: Allman
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+Cpp11BracedListStyle: true
+DeriveLineEnding: false
+EmptyLineBeforeAccessModifier: Leave
+EmptyLineAfterAccessModifier: Leave
+FixNamespaceComments: true
+IndentRequiresClause: false
+IndentWrappedFunctionNames: false
+InsertTrailingCommas: None
+AllowAllParametersOfDeclarationOnNextLine: false
+NamespaceIndentation: All
+ColumnLimit: 0
+SortIncludes: Never
