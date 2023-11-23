@@ -34,7 +34,7 @@ namespace CTX
 			ADD_EXPORT_ADDRESS_TYPED( ReallocFunc, TIER0_MODULE, "MemAlloc_ReallocFunc", void* ( * )( void* pMemory, std::size_t uNewSize ) );
 			ADD_EXPORT_ADDRESS_TYPED( GetSizeFunc, TIER0_MODULE, "MemAlloc_GetSizeFunc", std::size_t ( * )( void* pMemory ) );
 			ADD_EXPORT_ADDRESS_TYPED( FreeFunc, TIER0_MODULE, "MemAlloc_FreeFunc", void ( * )( void* pMemory ) );
-			ADD_EXPORT_ADDRESS_TYPED( StrDupFunc, TIER0_MODULE, "MemAlloc_StrDupFunc", void ( * )( const char* szString ) );
+			ADD_EXPORT_ADDRESS_TYPED( StrDupFunc, TIER0_MODULE, "MemAlloc_StrDupFunc", char* ( * )( const char* szString ) );
 		} MemAlloc;
 	};
 

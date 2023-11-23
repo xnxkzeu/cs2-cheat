@@ -16,16 +16,24 @@ add_library(cs2-cheat SHARED
     src/core/types/color_t.hpp
     src/core/types/vector_t.hpp
     src/core/types/matrix_t.hpp
+    src/core/types/quaternion_t.hpp
 
     src/core/hash/fnv1a.hpp
 
+    src/core/source2_engine/datatypes/ctransform.hpp
     src/core/source2_engine/datatypes/cutlmemory.hpp
     src/core/source2_engine/datatypes/cutlvector.hpp
+    src/core/source2_engine/datatypes/cutlstring.hpp
     src/core/source2_engine/datatypes/cutlmemorypool.hpp
     src/core/source2_engine/datatypes/cutltshash.hpp
+    src/core/source2_engine/datatypes/cinterlockedint.hpp
+    src/core/source2_engine/datatypes/resourcebinding_t.hpp
+    src/core/source2_engine/datatypes/cstronghandle.hpp
     src/core/source2_engine/datatypes/centityhandle.hpp
     src/core/source2_engine/datatypes/cgamescenenode.hpp
+    src/core/source2_engine/datatypes/cskeletoninstance.hpp
     src/core/source2_engine/datatypes/ccollisionproperty.hpp
+    src/core/source2_engine/datatypes/cmodel.hpp
 
     src/core/source2_engine/entities/centityinstance.hpp
     src/core/source2_engine/entities/c_baseentity.hpp

@@ -4,7 +4,9 @@
 #include "../core/helpers/render.hpp"
 
 #include "../core/source2_engine/datatypes/cgamescenenode.hpp"
+#include "../core/source2_engine/datatypes/cskeletoninstance.hpp"
 #include "../core/source2_engine/datatypes/ccollisionproperty.hpp"
+#include "../core/source2_engine/datatypes/cmodel.hpp"
 
 #include "../core/source2_engine/entities/c_csplayerpawn.hpp"
 #include "../core/source2_engine/entities/ccsplayercontroller.hpp"
@@ -48,10 +50,19 @@ namespace Features
 			if ( !pPlayerController )
 				continue;
 
-			Math::Vector_t< float, 2 > vecMins, vecMaxs;
-			if ( !CalculateBoundingBox( pPlayerPawn, vecMins, vecMaxs ) )
+			CGameSceneNode* pGameSceneNode = pPlayerPawn->GetGameSceneNode( );
+			if ( !pGameSceneNode )
 				continue;
 
+			CSkeletonInstance* pSkeletonInstance = pGameSceneNode->GetSkeletonInstance( );
+			if ( !pSkeletonInstance )
+				continue;
+
+			Math::Vector_t< float, 2 > vecMins, vecMaxs;
+			if ( !CalculateBoundingBox( pPlayerPawn, pSkeletonInstance, vecMins, vecMaxs ) )
+				continue;
+
+			PlayerSkeleton( pPlayerPawn, pSkeletonInstance );
 			PlayerBox( pPlayerPawn, vecMins, vecMaxs );
 			PlayerName( pPlayerPawn, pPlayerController, vecMins, vecMaxs );
 		}
@@ -81,14 +92,47 @@ namespace Features
 		Core::pRender->Text( Math::Vector_t< float, 2 >( vecMins[ Axis::X ] + ( vecMaxs[ Axis::X ] - vecMins[ Axis::X ] ) * 0.5f, vecMaxs[ Axis::Y ] + 1.f ), pPlayerController->GetPlayerName( ), colRender, TEXT_RENDER_CENTERED_X );
 	}
 
-	bool CESP::CalculateBoundingBox( C_BaseEntity* pBaseEntity, Math::Vector_t< float, 2 >& vecScreenMins, Math::Vector_t< float, 2 >& vecScreenMaxs ) noexcept
+	void CESP::PlayerSkeleton( C_CSPlayerPawn* pPlayerPawn, CSkeletonInstance* pSkeletonInstance ) noexcept
+	{
+		if ( !CTX::pConfig->ESP.bPlayerSkeleton )
+			return;
+
+		Color_t colRender = CTX::pConfig->ESP.colPlayerSkeletonEnemy;
+		if ( pPlayerPawn->GetTeam( ) == m_pLocalPlayerPawn->GetTeam( ) )
+			colRender = CTX::pConfig->ESP.colPlayerSkeletonTeammate;
+
+		const CModelState& modelState = pSkeletonInstance->GetModelState( );
+
+		const CModel* pModel = modelState.GetModel( );
+		if ( !pModel )
+			return;
+
+		const CTransform* pTransform = modelState.GetBoneTransformation( );
+
+		const CModelSkeleton& modelSkeleton = pModel->modelSkeleton;
+		for ( std::uint16_t uBoneIndex = 0; uBoneIndex < modelSkeleton.vecBoneParent.Count( ); uBoneIndex++ )
+		{
+			std::uint16_t uParentBoneIndex = modelSkeleton.vecBoneParent[ uBoneIndex ];
+			if ( uParentBoneIndex == static_cast< std::uint16_t >( -1 ) )
+				continue;
+
+			EBoneFlags uBoneFlags = modelSkeleton.vecBoneFlags[ uBoneIndex ];
+			if ( !( uBoneFlags & FLAG_HITBOX ) )
+				continue;
+
+			Math::Vector_t< float, 2 > vecChild, vecParent;
+			if ( !Core::pRender->WorldToScreen( pTransform[ uBoneIndex ].vecPosition, vecChild ) ||
+				 !Core::pRender->WorldToScreen( pTransform[ uParentBoneIndex ].vecPosition, vecParent ) )
+				continue;
+
+			Core::pRender->Line( vecChild, vecParent, colRender );
+		}
+	}
+
+	bool CESP::CalculateBoundingBox( C_BaseEntity* pBaseEntity, CGameSceneNode* pGameSceneNode, Math::Vector_t< float, 2 >& vecScreenMins, Math::Vector_t< float, 2 >& vecScreenMaxs ) noexcept
 	{
 		CCollisionProperty* pCollisionProperty = pBaseEntity->GetCollisionProperty( );
 		if ( !pCollisionProperty )
-			return false;
-
-		CGameSceneNode* pGameSceneNode = pBaseEntity->GetGameSceneNode( );
-		if ( !pGameSceneNode )
 			return false;
 
 		const Math::Vector_t< float, 3 >

@@ -132,7 +132,7 @@ namespace Core
 			return false;
 
 		const Math::ViewMatrix_t& matWorldToScreen = pRenderGameSystem->WorldToProjectionMatrix( iSplitScreenSlot );
-		const float flWidth = matWorldToScreen[ 3 ][ 0 ] * vecWorld[ 0 ] + matWorldToScreen[ 3 ][ 1 ] * vecWorld[ 1 ] + matWorldToScreen[ 3 ][ 2 ] * vecWorld[ 2 ] + matWorldToScreen[ 3 ][ 3 ];
+		const float flWidth = matWorldToScreen[ 3, 0 ] * vecWorld[ 0 ] + matWorldToScreen[ 3, 1 ] * vecWorld[ 1 ] + matWorldToScreen[ 3, 2 ] * vecWorld[ 2 ] + matWorldToScreen[ 3, 3 ];
 
 		if ( flWidth < 0.001f )
 			return false;
@@ -140,8 +140,8 @@ namespace Core
 		ImVec2& vecDisplaySize = m_pImGuiIO->DisplaySize;
 
 		const float flInverse = 1.0f / flWidth;
-		vecOutScreen[ 0 ] = ( matWorldToScreen[ 0 ][ 0 ] * vecWorld[ 0 ] + matWorldToScreen[ 0 ][ 1 ] * vecWorld[ 1 ] + matWorldToScreen[ 0 ][ 2 ] * vecWorld[ 2 ] + matWorldToScreen[ 0 ][ 3 ] ) * flInverse;
-		vecOutScreen[ 1 ] = ( matWorldToScreen[ 1 ][ 0 ] * vecWorld[ 0 ] + matWorldToScreen[ 1 ][ 1 ] * vecWorld[ 1 ] + matWorldToScreen[ 1 ][ 2 ] * vecWorld[ 2 ] + matWorldToScreen[ 1 ][ 3 ] ) * flInverse;
+		vecOutScreen[ 0 ] = ( matWorldToScreen[ 0, 0 ] * vecWorld[ 0 ] + matWorldToScreen[ 0, 1 ] * vecWorld[ 1 ] + matWorldToScreen[ 0, 2 ] * vecWorld[ 2 ] + matWorldToScreen[ 0, 3 ] ) * flInverse;
+		vecOutScreen[ 1 ] = ( matWorldToScreen[ 1, 0 ] * vecWorld[ 0 ] + matWorldToScreen[ 1, 1 ] * vecWorld[ 1 ] + matWorldToScreen[ 1, 2 ] * vecWorld[ 2 ] + matWorldToScreen[ 1, 3 ] ) * flInverse;
 
 		vecOutScreen[ 0 ] = std::floor( ( vecDisplaySize[ 0 ] * 0.5f ) + ( vecOutScreen[ 0 ] * vecDisplaySize[ 0 ] ) * 0.5f );
 		vecOutScreen[ 1 ] = std::floor( ( vecDisplaySize[ 1 ] * 0.5f ) - ( vecOutScreen[ 1 ] * vecDisplaySize[ 1 ] ) * 0.5f );

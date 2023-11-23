@@ -16,7 +16,9 @@ namespace Math
 {
 	struct QAngle_t
 	{
-		QAngle_t( float flPitch = 0.f, float flYaw = 0.f, float flRoll = 0.f ) noexcept
+		constexpr QAngle_t( ) = default;
+
+		constexpr QAngle_t( float flPitch, float flYaw, float flRoll ) noexcept
 		{
 			operator[]( Rotation::Pitch ) = flPitch;
 			operator[]( Rotation::Yaw ) = flYaw;
@@ -26,9 +28,26 @@ namespace Math
 			Clamp( );
 		}
 
-		explicit QAngle_t( const float* arrAngles )
+		constexpr QAngle_t( const QAngle_t& vecOther ) noexcept
 		{
-			std::memcpy( m_arrAngles.data( ), arrAngles, sizeof( m_arrAngles ) );
+			m_arrAngles = vecOther.m_arrAngles;
+		}
+
+		constexpr QAngle_t& operator=( const QAngle_t& vecOther ) noexcept
+		{
+			m_arrAngles = vecOther.m_arrAngles;
+			return *this;
+		}
+
+		constexpr QAngle_t( QAngle_t&& vecOther ) noexcept
+		{
+			m_arrAngles = vecOther.m_arrAngles;
+		}
+
+		constexpr explicit QAngle_t( const float* arrAngles )
+		{
+			for ( std::size_t uIndex = 0; uIndex < m_arrAngles.size( ); uIndex++ )
+				m_arrAngles[ uIndex ] = arrAngles[ uIndex ];
 		}
 
 		void Normalize( ) noexcept
@@ -45,52 +64,52 @@ namespace Math
 			operator[]( Rotation::Roll ) = std::clamp( operator[]( Rotation::Roll ), -50.f, 50.f );
 		}
 
-		[[nodiscard]] float& GetPitch( ) noexcept
+		[[nodiscard]] constexpr float& GetPitch( ) noexcept
 		{
 			return operator[]( Rotation::Pitch );
 		}
 
-		[[nodiscard]] const float& GetPitch( ) const noexcept
+		[[nodiscard]] constexpr const float& GetPitch( ) const noexcept
 		{
 			return operator[]( Rotation::Pitch );
 		}
 
-		[[nodiscard]] float& GetYaw( ) noexcept
+		[[nodiscard]] constexpr float& GetYaw( ) noexcept
 		{
 			return operator[]( Rotation::Yaw );
 		}
 
-		[[nodiscard]] const float& GetYaw( ) const noexcept
+		[[nodiscard]] constexpr const float& GetYaw( ) const noexcept
 		{
 			return operator[]( Rotation::Yaw );
 		}
 
-		[[nodiscard]] float& GetRoll( ) noexcept
+		[[nodiscard]] constexpr float& GetRoll( ) noexcept
 		{
 			return operator[]( Rotation::Roll );
 		}
 
-		[[nodiscard]] const float& GetRoll( ) const noexcept
+		[[nodiscard]] constexpr const float& GetRoll( ) const noexcept
 		{
 			return operator[]( Rotation::Roll );
 		}
 
-		[[nodiscard]] float& operator[]( std::size_t uIndex )
+		[[nodiscard]] constexpr float& operator[]( std::size_t uIndex )
 		{
 			return m_arrAngles[ uIndex ];
 		}
 
-		[[nodiscard]] const float& operator[]( std::size_t uIndex ) const
+		[[nodiscard]] constexpr const float& operator[]( std::size_t uIndex ) const
 		{
 			return m_arrAngles[ uIndex ];
 		}
 
-		[[nodiscard]] float& operator[]( Rotation uIndex )
+		[[nodiscard]] constexpr float& operator[]( Rotation uIndex )
 		{
 			return m_arrAngles[ std::to_underlying( uIndex ) ];
 		}
 
-		[[nodiscard]] const float& operator[]( Rotation uIndex ) const
+		[[nodiscard]] constexpr const float& operator[]( Rotation uIndex ) const
 		{
 			return m_arrAngles[ std::to_underlying( uIndex ) ];
 		}

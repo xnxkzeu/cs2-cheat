@@ -107,6 +107,20 @@ namespace Core::UI
 						if ( ImGui::ColorEdit4( "Teammate##Name", &vecColor.x, ImGuiColorEditFlags_NoInputs ) )
 							CTX::pConfig->ESP.colPlayerNameTeammate = ImGui::ColorConvertFloat4ToU32( vecColor );
 					}
+					ImGui::Checkbox( "Player skeleton", &CTX::pConfig->ESP.bPlayerSkeleton );
+					ImGui::SameLine( 250.f );
+
+					{
+						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( static_cast< ImU32 >( CTX::pConfig->ESP.colPlayerSkeletonEnemy ) );
+						if ( ImGui::ColorEdit4( "Enemy##Skeleton", &vecColor.x, ImGuiColorEditFlags_NoInputs ) )
+							CTX::pConfig->ESP.colPlayerSkeletonEnemy = ImGui::ColorConvertFloat4ToU32( vecColor );
+					}
+					ImGui::SameLine( 450.f );
+					{
+						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( static_cast< ImU32 >( CTX::pConfig->ESP.colPlayerSkeletonTeammate ) );
+						if ( ImGui::ColorEdit4( "Teammate##Skeleton", &vecColor.x, ImGuiColorEditFlags_NoInputs ) )
+							CTX::pConfig->ESP.colPlayerSkeletonTeammate = ImGui::ColorConvertFloat4ToU32( vecColor );
+					}
 					break;
 				case 1:
 					break;

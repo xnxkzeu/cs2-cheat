@@ -114,10 +114,14 @@ namespace Core::Memory
 		return Core::Memory::CallVFunc< tReturn __VA_OPT__(, ) __VA_ARGS__, uIndex > tArgs; \
 	}
 
-#define OFFSET( iOffset, fnVariable, tReturn, ... )                                                                                                   \
-	[[nodiscard]] std::add_lvalue_reference_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > fnVariable( ) noexcept                                            \
-	{                                                                                                                                                 \
-		return *reinterpret_cast< std::add_pointer_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > >( reinterpret_cast< std::uintptr_t >( this ) + iOffset ); \
+#define OFFSET( iOffset, fnVariable, tReturn, ... )                                                                                                                       \
+	[[nodiscard]] std::add_lvalue_reference_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > fnVariable( ) noexcept                                                                \
+	{                                                                                                                                                                     \
+		return *reinterpret_cast< std::add_pointer_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > >( reinterpret_cast< std::uintptr_t >( this ) + iOffset );                     \
+	}                                                                                                                                                                     \
+	[[nodiscard]] std::add_lvalue_reference_t< std::add_const_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > > fnVariable( ) const noexcept                                      \
+	{                                                                                                                                                                     \
+		return *reinterpret_cast< std::add_pointer_t< std::add_const_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > > >( reinterpret_cast< std::uintptr_t >( this ) + iOffset ); \
 	}
 
 #endif // CS2_CHEAT_MEMORY_HPP

@@ -45,13 +45,14 @@ namespace Math
 
 		constexpr Vector_t( const tValue ( &arrValues )[ uSize ] ) noexcept
 		{
-			std::memcpy( m_arrValues.data( ), arrValues, sizeof( m_arrValues ) );
+			for ( std::size_t uIndex = 0; uIndex < uSize; uIndex++ )
+				m_arrValues[ uIndex ] = arrValues[ uIndex ];
 		}
 
-		constexpr Vector_t( std::same_as< tValue > auto... listValues ) noexcept
+		constexpr Vector_t( std::convertible_to< tValue > auto... listValues ) noexcept
 		requires( sizeof...( listValues ) == uSize )
 		{
-			m_arrValues = { listValues... };
+			m_arrValues = { static_cast< tValue >( listValues )... };
 		}
 
 		[[nodiscard]] constexpr bool IsValid( ) const noexcept
@@ -92,7 +93,7 @@ namespace Math
 		}
 
 		template< std::size_t uVectorLength = uSize >
-		constexpr tValue GetDot( ) const noexcept
+		[[nodiscard]] constexpr tValue GetDot( ) const noexcept
 		requires( std::floating_point< tValue > )
 		{
 			tValue valResult = { };
@@ -104,14 +105,14 @@ namespace Math
 		}
 
 		template< std::size_t uVectorLength = uSize >
-		constexpr tValue GetLength( ) const noexcept
+		[[nodiscard]] constexpr tValue GetLength( ) const noexcept
 		requires( std::floating_point< tValue > )
 		{
 			return std::sqrt( GetDot< uVectorLength >( ) );
 		}
 
 		template< std::size_t uVectorLength = uSize >
-		constexpr tValue Dot( const Vector_t& vecOther ) const noexcept
+		[[nodiscard]] constexpr tValue Dot( const Vector_t& vecOther ) const noexcept
 		requires( std::floating_point< tValue > )
 		{
 			tValue valResult = { };
@@ -123,7 +124,7 @@ namespace Math
 		}
 
 		template< std::size_t uVectorLength = uSize >
-		constexpr tValue Length( const Vector_t& vecOther ) const noexcept
+		[[nodiscard]] constexpr tValue Length( const Vector_t& vecOther ) const noexcept
 		requires( std::floating_point< tValue > )
 		{
 			return std::sqrt( Dot< uVectorLength >( vecOther ) );

@@ -24,16 +24,25 @@ namespace Math
 			return *this;
 		}
 
-		constexpr std::array< tValue, uColumns >& operator[]( std::size_t uIndex ) noexcept
+		[[nodiscard]] constexpr std::array< tValue, uColumns >& operator[]( std::size_t uIndex ) noexcept
 		{
 			return this->m_arrValues[ uIndex ];
 		}
 
-		constexpr const std::array< tValue, uColumns >& operator[]( std::size_t uIndex ) const noexcept
+		[[nodiscard]] constexpr const std::array< tValue, uColumns >& operator[]( std::size_t uIndex ) const noexcept
 		{
 			return this->m_arrValues[ uIndex ];
 		}
 
+		[[nodiscard]] constexpr tValue& operator[]( std::size_t uRow, std::size_t uColumn ) noexcept
+		{
+			return this->m_arrValues[ uRow ][ uColumn ];
+		}
+
+		[[nodiscard]] constexpr const tValue& operator[]( std::size_t uRow, std::size_t uColumn ) const noexcept
+		{
+			return this->m_arrValues[ uRow ][ uColumn ];
+		}
 	private:
 		std::array< std::array< tValue, uColumns >, uRows > m_arrValues = { };
 	};

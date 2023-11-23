@@ -24,16 +24,16 @@ namespace Core
 	inline std::unique_ptr< CSchema > pSchema = nullptr;
 } // namespace Core
 
-#define SCHEMA_VARIABLE_OFFSET( szFieldName, pFunction, iAdditional, tReturn, ... )                                                                                                  \
-	[[nodiscard]] auto pFunction( ) noexcept                                                                                                                                         \
-	{                                                                                                                                                                                \
-		static std::uint32_t uOffset = Core::pSchema->GetOffset( Core::Hash::FNV1A( szFieldName ) );                                                                                 \
-		return *reinterpret_cast< std::add_pointer_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > >( reinterpret_cast< std::uintptr_t >( this ) + uOffset + iAdditional );                  \
-	}                                                                                                                                                                                \
-	[[nodiscard]] auto pFunction( ) const noexcept                                                                                                                                   \
-	{                                                                                                                                                                                \
-		static std::uint32_t uOffset = Core::pSchema->GetOffset( Core::Hash::FNV1A( szFieldName ) );                                                                                 \
-		return std::as_const( *reinterpret_cast< std::add_pointer_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > >( reinterpret_cast< std::uintptr_t >( this ) + uOffset + iAdditional ) ); \
+#define SCHEMA_VARIABLE_OFFSET( szFieldName, pFunction, iAdditional, tReturn, ... )                                                                                                     \
+	[[nodiscard]] std::add_lvalue_reference_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > pFunction( ) noexcept                                                                               \
+	{                                                                                                                                                                                   \
+		static std::uint32_t uOffset = Core::pSchema->GetOffset( Core::Hash::FNV1A( szFieldName ) );                                                                                    \
+		return *reinterpret_cast< std::add_pointer_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > >( reinterpret_cast< std::uintptr_t >( this ) + uOffset + iAdditional );                     \
+	}                                                                                                                                                                                   \
+	[[nodiscard]] std::add_lvalue_reference_t< std::add_const_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > > pFunction( ) const noexcept                                                     \
+	{                                                                                                                                                                                   \
+		static std::uint32_t uOffset = Core::pSchema->GetOffset( Core::Hash::FNV1A( szFieldName ) );                                                                                    \
+		return *reinterpret_cast< std::add_pointer_t< std::add_const_t< tReturn __VA_OPT__(, ) __VA_ARGS__ > > >( reinterpret_cast< std::uintptr_t >( this ) + uOffset + iAdditional ); \
 	}
 
 #define SCHEMA_VARIABLE( szFieldName, pFunction, tReturn, ... ) \
