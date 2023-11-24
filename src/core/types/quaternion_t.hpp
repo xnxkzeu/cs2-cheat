@@ -5,13 +5,7 @@
 #include <cmath>
 #include <algorithm>
 
-enum class QuatAxis
-{
-	W = 0,
-	X = 1,
-	Y = 2,
-	Z = 3,
-};
+#include "vector_t.hpp"
 
 namespace Math
 {
@@ -36,12 +30,12 @@ namespace Math
 			return m_arrValues[ uIndex ];
 		}
 
-		constexpr float& operator[]( QuatAxis uIndex ) noexcept
+		constexpr float& operator[]( Axis uIndex ) noexcept
 		{
 			return m_arrValues[ std::to_underlying( uIndex ) ];
 		}
 
-		constexpr const float& operator[]( QuatAxis uIndex ) const noexcept
+		constexpr const float& operator[]( Axis uIndex ) const noexcept
 		{
 			return m_arrValues[ std::to_underlying( uIndex ) ];
 		}

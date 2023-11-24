@@ -135,9 +135,11 @@ namespace Features
 		if ( !pCollisionProperty )
 			return false;
 
+		const CTransform& tmNodeToWorld = pGameSceneNode->GetTransform( );
+
 		const Math::Vector_t< float, 3 >
-			vecWorldMins = pGameSceneNode->GetAbsOrigin( ) + pCollisionProperty->GetMins( ),
-			vecWorldMaxs = pGameSceneNode->GetAbsOrigin( ) + pCollisionProperty->GetMaxs( );
+			vecWorldMins = tmNodeToWorld.vecPosition + pCollisionProperty->GetMins( ),
+			vecWorldMaxs = tmNodeToWorld.vecPosition + pCollisionProperty->GetMaxs( );
 
 		vecScreenMins = { std::numeric_limits< float >::max( ), std::numeric_limits< float >::max( ) };
 		vecScreenMaxs = { std::numeric_limits< float >::lowest( ), std::numeric_limits< float >::lowest( ) };

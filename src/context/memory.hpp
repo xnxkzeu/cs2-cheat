@@ -17,8 +17,8 @@ namespace CTX
 	{
 		struct
 		{
-			Core::Memory::Address_t Present = Core::Memory::FindPattern( xorstr_( GAMEOVERLAYRENDERER64_MODULE ), xorstr_( "48 89 6C 24 ? 48 89 74 24 ? 41 56 48 83 EC 20 41 8B E8" ) );
-			Core::Memory::Address_t ResizeBuffers = Core::Memory::FindPattern( xorstr_( GAMEOVERLAYRENDERER64_MODULE ), xorstr_( "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 56 41 57 48 83 EC ? 44 8B FA" ) );
+			ADD_ADDRESS( Present, GAMEOVERLAYRENDERER64_MODULE, "48 89 6C 24 ? 48 89 74 24 ? 41 56 48 83 EC 20 41 8B E8" );
+			ADD_ADDRESS( ResizeBuffers, GAMEOVERLAYRENDERER64_MODULE, "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 56 41 57 48 83 EC ? 44 8B FA" );
 		} IDXGISwapChain;
 
 		struct
