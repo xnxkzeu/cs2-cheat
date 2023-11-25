@@ -22,7 +22,7 @@ public:
 	CGameSceneNode( CGameSceneNode&& ) = delete;
 	CGameSceneNode( const CGameSceneNode& ) = delete;
 
-	[[nodiscard]] virtual ScriptClassDesc_t* GetScriptDesc( ) = 0;
+	[[nodiscard]] virtual ScriptClassDesc_t* GetScriptDesc( ) const = 0;
 	virtual ~CGameSceneNode( ) = 0;
 	virtual void AddedToEntityDatabase( CEntityInstance* pEntityInstance ) = 0;
 	virtual void Connect( const char* szUnknown, CEntityInstance* pEntityInstance ) = 0;

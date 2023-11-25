@@ -3,6 +3,8 @@
 
 #include "c_baseentity.hpp"
 
+#include "../datatypes/cutlstring.hpp"
+
 class CBasePlayerController
 	: public C_BaseEntity
 {

@@ -20,35 +20,35 @@ namespace Math
 		{
 		}
 
-		constexpr float& operator[]( std::size_t uIndex ) noexcept
+		[[nodiscard]] constexpr float& operator[]( std::size_t uIndex ) noexcept
 		{
-			return m_arrValues[ uIndex ];
+			return this->m_arrValues[ uIndex ];
 		}
 
-		constexpr const float& operator[]( std::size_t uIndex ) const noexcept
+		[[nodiscard]] constexpr float operator[]( std::size_t uIndex ) const noexcept
 		{
-			return m_arrValues[ uIndex ];
+			return this->m_arrValues[ uIndex ];
 		}
 
-		constexpr float& operator[]( Axis uIndex ) noexcept
+		[[nodiscard]] constexpr float& operator[]( Axis uIndex ) noexcept
 		{
-			return m_arrValues[ std::to_underlying( uIndex ) ];
+			return this->m_arrValues[ std::to_underlying( uIndex ) ];
 		}
 
-		constexpr const float& operator[]( Axis uIndex ) const noexcept
+		[[nodiscard]] constexpr float operator[]( Axis uIndex ) const noexcept
 		{
-			return m_arrValues[ std::to_underlying( uIndex ) ];
+			return this->m_arrValues[ std::to_underlying( uIndex ) ];
 		}
 
 		[[nodiscard]] constexpr bool IsValid( ) const noexcept
 		{
-			return std::ranges::all_of( m_arrValues, []( float flValue )
+			return std::ranges::all_of( this->m_arrValues, []( float flValue )
 										{ return std::isfinite( flValue ); } );
 		}
 
 		constexpr void Invalidate( ) noexcept
 		{
-			std::ranges::fill( m_arrValues, std::numeric_limits< float >::infinity( ) );
+			std::ranges::fill( this->m_arrValues, std::numeric_limits< float >::infinity( ) );
 		}
 
 	private:

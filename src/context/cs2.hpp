@@ -17,6 +17,7 @@ struct ISchemaSystem;
 struct ISource2Client;
 struct IInputSystem;
 struct ICvar;
+struct ILocalize;
 
 class CCSGOInput;
 class CRenderDeviceDx11;
@@ -33,6 +34,7 @@ namespace CTX
 		ADD_INTERFACE( ISchemaSystem, pSchemaSystem, SCHEMASYSTEM_MODULE, "SchemaSystem_" );
 		ADD_INTERFACE( IInputSystem, pInputSystem, INPUTSYSTEM_MODULE, "InputSystemVersion" );
 		ADD_INTERFACE( ICvar, pCvar, TIER0_MODULE, "VEngineCvar" );
+		ADD_INTERFACE( ILocalize, pLocalize, LOCALIZE_MODULE, "Localize_" );
 
 		ADD_INTERFACE_CUSTOM( CCSGOInput, pCSGOInput, Core::Memory::FindPattern( xorstr_( CLIENT_MODULE ), xorstr_( "48 8B 0D ? ? ? ? 41 8B D5 4C 8B 09" ) ).Jump( 0x3 ).Get( ) );
 		ADD_INTERFACE_CUSTOM( CRenderDeviceDx11, pRenderDeviceDx11, Core::Memory::FindPattern( xorstr_( CLIENT_MODULE ), xorstr_( "48 8B 0D ? ? ? ? 66 44 89 6C 24" ) ).Jump( 0x3 ).Get( ) );

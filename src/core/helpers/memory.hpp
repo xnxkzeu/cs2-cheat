@@ -12,6 +12,7 @@
 #define TIER0_MODULE							"tier0.dll"
 #define CLIENT_MODULE							"client.dll"
 #define ENGINE2_MODULE 							"engine2.dll"
+#define LOCALIZE_MODULE 						"localize.dll"
 #define INPUTSYSTEM_MODULE 						"inputsystem.dll"
 #define MATCHMAKING_MODULE 						"matchmaking.dll"
 #define SCHEMASYSTEM_MODULE 					"schemasystem.dll"

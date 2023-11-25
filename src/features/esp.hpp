@@ -16,7 +16,7 @@ namespace Features
 	class CESP
 	{
 	public:
-		CESP( ) = default;
+		CESP( );
 		~CESP( ) = default;
 
 		void Render( );
@@ -29,6 +29,8 @@ namespace Features
 		static bool CalculateBoundingBox( C_BaseEntity* pBaseEntity, CGameSceneNode* pGameSceneNode, Math::Vector_t< float, 2 >& vecScreenMins, Math::Vector_t< float, 2 >& vecScreenMaxs ) noexcept;
 
 		C_CSPlayerPawn* m_pLocalPlayerPawn = nullptr;
+
+		const char* m_szBotLabel = nullptr;
 	};
 
 	inline std::unique_ptr< CESP > pESP = nullptr;

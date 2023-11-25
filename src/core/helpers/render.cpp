@@ -174,7 +174,7 @@ namespace Core
 			} );
 	}
 
-	void CRender::Text( const Math::Vector_t< float, 2 >& vecPos, const char* szText, const Color_t colText, std::uint32_t uFlags ) noexcept
+	void CRender::Text( const Math::Vector_t< float, 2 >& vecPos, std::string_view szText, const Color_t colText, std::uint32_t uFlags ) noexcept
 	{
 		m_vecDrawData.emplace_back(
 			TextObject_t {
@@ -183,11 +183,11 @@ namespace Core
 				*reinterpret_cast< const ImVec2* >( &vecPos ),
 				static_cast< ImU32 >( colText ),
 				static_cast< ETextRenderFlags >( uFlags ),
-				szText,
+				szText.data( ),
 			} );
 	}
 
-	void CRender::Text( ImFont* pFont, float flFontSize, const Math::Vector_t< float, 2 >& vecPos, const char* szText, Color_t colText, std::uint32_t uFlags ) noexcept
+	void CRender::Text( ImFont* pFont, float flFontSize, const Math::Vector_t< float, 2 >& vecPos, std::string_view szText, Color_t colText, std::uint32_t uFlags ) noexcept
 	{
 		if ( pFont && !pFont->ContainerAtlas )
 			pFont = nullptr;
@@ -199,7 +199,7 @@ namespace Core
 				*reinterpret_cast< const ImVec2* >( &vecPos ),
 				static_cast< ImU32 >( colText ),
 				static_cast< ETextRenderFlags >( uFlags ),
-				szText,
+				szText.data( ),
 			} );
 	}
 

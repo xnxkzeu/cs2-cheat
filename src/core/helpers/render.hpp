@@ -50,8 +50,8 @@ namespace Core
 
 		void Line( const Math::Vector_t< float, 2 >& vecStart, const Math::Vector_t< float, 2 >& vecEnd, Color_t colLine, float flThickness = 1.f ) noexcept;
 		void Rect( const Math::Vector_t< float, 2 >& vecMin, const Math::Vector_t< float, 2 >& vecMax, Color_t colRect, std::uint32_t uFlags = { }, Color_t colOutline = Color_t( 0, 0, 0, 255 ), float flRounding = 0.f, ImDrawFlags uRoundingCorners = ImDrawFlags_RoundCornersAll, float flThickness = 1.f ) noexcept;
-		void Text( const Math::Vector_t< float, 2 >& vecPos, const char* szText, Color_t colText, std::uint32_t uFlags = { } ) noexcept;
-		void Text( ImFont* pFont, float flFontSize, const Math::Vector_t< float, 2 >& vecPos, const char* szText, Color_t colText, std::uint32_t uFlags = { } ) noexcept;
+		void Text( const Math::Vector_t< float, 2 >& vecPos, std::string_view szText, Color_t colText, std::uint32_t uFlags = { } ) noexcept;
+		void Text( ImFont* pFont, float flFontSize, const Math::Vector_t< float, 2 >& vecPos, std::string_view szText, Color_t colText, std::uint32_t uFlags = { } ) noexcept;
 	private:
 		void RenderObjects( ) noexcept;
 

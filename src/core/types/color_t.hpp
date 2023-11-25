@@ -27,26 +27,12 @@ struct Color_t
 
 	constexpr Color_t( std::uint32_t uColor ) noexcept
 	{
-		if ( std::is_constant_evaluated( ) )
-			*std::bit_cast< std::uint32_t* >( m_arrColors.data( ) ) = uColor;
-		else
-			*reinterpret_cast< std::uint32_t* >( m_arrColors.data( ) ) = uColor;
+		m_arrColors = std::bit_cast< decltype( m_arrColors ) >( uColor );
 	}
 
-	[[nodiscard]] explicit constexpr operator std::uint32_t&( ) noexcept
+	[[nodiscard]] constexpr operator std::uint32_t( ) const noexcept
 	{
-		if ( std::is_constant_evaluated( ) )
-			return *std::bit_cast< std::uint32_t* >( m_arrColors.data( ) );
-
-		return *reinterpret_cast< std::uint32_t* >( m_arrColors.data( ) );
-	}
-
-	[[nodiscard]] explicit constexpr operator const std::uint32_t&( ) const noexcept
-	{
-		if ( std::is_constant_evaluated( ) )
-			return *std::bit_cast< const std::uint32_t* >( m_arrColors.data( ) );
-
-		return *reinterpret_cast< const std::uint32_t* >( m_arrColors.data( ) );
+		return std::bit_cast< std::uint32_t >( m_arrColors );
 	}
 
 	[[nodiscard]] constexpr std::uint8_t& operator[]( std::size_t uIndex ) noexcept

@@ -13,10 +13,14 @@ class CCollisionProperty;
 
 enum EEntityFlags : std::uint32_t
 {
-	FL_ONGROUND = 0x1,
-	FL_DUCKING = 0x2,
-	FL_ANIMDUCKING = 0x4,
-	FL_WATERJUMP = 0x8,
+	FL_ONGROUND = ( 1 << 0 ),
+	FL_DUCKING = ( 1 << 1 ),
+	FL_ANIMDUCKING = ( 1 << 2 ),
+	FL_WATERJUMP = ( 1 << 3 ),
+	FL_FROZEN = ( 1 << 5 ),
+	FL_ATCONTROLS = ( 1 << 6 ),
+	FL_CLIENT = ( 1 << 7 ),
+	FL_FAKECLIENT = ( 1 << 8 ),
 };
 
 enum EMoveType : std::uint8_t

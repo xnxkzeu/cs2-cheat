@@ -14,12 +14,16 @@ namespace Math
 
 		constexpr Matrix_t( const tValue ( &arrValues )[ uRows ][ uColumns ] ) noexcept
 		{
-			std::ranges::copy( arrValues, m_arrValues );
+			for ( std::size_t uRow = 0; uRow < uRows; uRow++ )
+				for ( std::size_t uColumn = 0; uColumn < uColumns; uColumn++ )
+					this->m_arrValues[ uRow ][ uColumn ] = arrValues[ uRow ][ uColumn ];
 		}
 
 		constexpr Matrix_t& operator=( const tValue ( &arrValues )[ uRows ][ uColumns ] ) noexcept
 		{
-			std::ranges::copy( arrValues, m_arrValues );
+			for ( std::size_t uRow = 0; uRow < uRows; uRow++ )
+				for ( std::size_t uColumn = 0; uColumn < uColumns; uColumn++ )
+					this->m_arrValues[ uRow ][ uColumn ] = arrValues[ uRow ][ uColumn ];
 
 			return *this;
 		}

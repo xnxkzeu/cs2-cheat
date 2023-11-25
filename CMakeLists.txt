@@ -50,6 +50,7 @@ add_library(cs2-cheat SHARED
     src/core/source2_engine/isource2engine.hpp
     src/core/source2_engine/isource2client.hpp
     src/core/source2_engine/iinputsystem.hpp
+    src/core/source2_engine/ilocalize.hpp
     src/core/source2_engine/ischemasystem.hpp
     src/core/source2_engine/crenderdevicedx11.hpp
     src/core/source2_engine/cgameentitysystem.hpp

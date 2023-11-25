@@ -30,24 +30,24 @@ namespace Math
 
 		constexpr QAngle_t( const QAngle_t& vecOther ) noexcept
 		{
-			m_arrAngles = vecOther.m_arrAngles;
+			this->m_arrAngles = vecOther.m_arrAngles;
 		}
 
 		constexpr QAngle_t& operator=( const QAngle_t& vecOther ) noexcept
 		{
-			m_arrAngles = vecOther.m_arrAngles;
+			this->m_arrAngles = vecOther.m_arrAngles;
 			return *this;
 		}
 
 		constexpr QAngle_t( QAngle_t&& vecOther ) noexcept
 		{
-			m_arrAngles = vecOther.m_arrAngles;
+			this->m_arrAngles = vecOther.m_arrAngles;
 		}
 
 		constexpr explicit QAngle_t( const float* arrAngles )
 		{
-			for ( std::size_t uIndex = 0; uIndex < m_arrAngles.size( ); uIndex++ )
-				m_arrAngles[ uIndex ] = arrAngles[ uIndex ];
+			for ( std::size_t uIndex = 0; uIndex < this->m_arrAngles.size( ); uIndex++ )
+				this->m_arrAngles[ uIndex ] = arrAngles[ uIndex ];
 		}
 
 		void Normalize( ) noexcept
@@ -69,7 +69,7 @@ namespace Math
 			return operator[]( Rotation::Pitch );
 		}
 
-		[[nodiscard]] constexpr const float& GetPitch( ) const noexcept
+		[[nodiscard]] constexpr float GetPitch( ) const noexcept
 		{
 			return operator[]( Rotation::Pitch );
 		}
@@ -79,7 +79,7 @@ namespace Math
 			return operator[]( Rotation::Yaw );
 		}
 
-		[[nodiscard]] constexpr const float& GetYaw( ) const noexcept
+		[[nodiscard]] constexpr float GetYaw( ) const noexcept
 		{
 			return operator[]( Rotation::Yaw );
 		}
@@ -89,29 +89,89 @@ namespace Math
 			return operator[]( Rotation::Roll );
 		}
 
-		[[nodiscard]] constexpr const float& GetRoll( ) const noexcept
+		[[nodiscard]] constexpr float GetRoll( ) const noexcept
 		{
 			return operator[]( Rotation::Roll );
 		}
 
 		[[nodiscard]] constexpr float& operator[]( std::size_t uIndex )
 		{
-			return m_arrAngles[ uIndex ];
+			return this->m_arrAngles[ uIndex ];
 		}
 
-		[[nodiscard]] constexpr const float& operator[]( std::size_t uIndex ) const
+		[[nodiscard]] constexpr float operator[]( std::size_t uIndex ) const
 		{
-			return m_arrAngles[ uIndex ];
+			return this->m_arrAngles[ uIndex ];
 		}
 
 		[[nodiscard]] constexpr float& operator[]( Rotation uIndex )
 		{
-			return m_arrAngles[ std::to_underlying( uIndex ) ];
+			return this->m_arrAngles[ std::to_underlying( uIndex ) ];
 		}
 
-		[[nodiscard]] constexpr const float& operator[]( Rotation uIndex ) const
+		[[nodiscard]] constexpr float operator[]( Rotation uIndex ) const
 		{
-			return m_arrAngles[ std::to_underlying( uIndex ) ];
+			return this->m_arrAngles[ std::to_underlying( uIndex ) ];
+		}
+
+		QAngle_t& operator+=( const QAngle_t& angOther ) noexcept
+		{
+			for ( std::size_t uIndex = 0; uIndex < this->m_arrAngles.size( ); ++uIndex )
+				this->m_arrAngles[ uIndex ] += angOther.m_arrAngles[ uIndex ];
+
+			return *this;
+		}
+
+		QAngle_t& operator-=( const QAngle_t& angOther ) noexcept
+		{
+			for ( std::size_t uIndex = 0; uIndex < this->m_arrAngles.size( ); ++uIndex )
+				this->m_arrAngles[ uIndex ] -= angOther.m_arrAngles[ uIndex ];
+
+			return *this;
+		}
+
+		QAngle_t& operator*=( const QAngle_t& angOther ) noexcept
+		{
+			for ( std::size_t uIndex = 0; uIndex < this->m_arrAngles.size( ); ++uIndex )
+				this->m_arrAngles[ uIndex ] *= angOther.m_arrAngles[ uIndex ];
+
+			return *this;
+		}
+
+		QAngle_t& operator/=( const QAngle_t& angOther ) noexcept
+		{
+			for ( std::size_t uIndex = 0; uIndex < this->m_arrAngles.size( ); ++uIndex )
+				this->m_arrAngles[ uIndex ] /= angOther.m_arrAngles[ uIndex ];
+
+			return *this;
+		}
+
+		[[nodiscard]] QAngle_t operator+( const QAngle_t& angOther ) const noexcept
+		{
+			QAngle_t angOutput = *this;
+			angOutput += angOther;
+			return angOutput;
+		}
+
+		[[nodiscard]] QAngle_t operator-( const QAngle_t& angOther ) const noexcept
+		{
+			QAngle_t angOutput = *this;
+			angOutput -= angOther;
+			return angOutput;
+		}
+
+		[[nodiscard]] QAngle_t operator*( const QAngle_t& angOther ) const noexcept
+		{
+			QAngle_t angOutput = *this;
+			angOutput *= angOther;
+			return angOutput;
+		}
+
+		[[nodiscard]] QAngle_t operator/( const QAngle_t& angOther ) const noexcept
+		{
+			QAngle_t angOutput = *this;
+			angOutput *= angOther;
+			return angOutput;
 		}
 
 	private:

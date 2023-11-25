@@ -12,6 +12,7 @@
 #include "../core/source2_engine/entities/ccsplayercontroller.hpp"
 
 #include "../core/source2_engine/isource2engine.hpp"
+#include "../core/source2_engine/ilocalize.hpp"
 #include "../core/source2_engine/cgameentitysystem.hpp"
 
 #include "../context/config.hpp"
@@ -19,6 +20,11 @@
 
 namespace Features
 {
+	CESP::CESP( )
+	{
+		m_szBotLabel = CTX::pCS2->pLocalize->Find( xorstr_( "SFUI_scoreboard_lbl_bot" ) );
+	}
+
 	void CESP::Render( )
 	{
 		if ( !CTX::pConfig->ESP.bEnabled )
@@ -36,8 +42,7 @@ namespace Features
 		if ( !pLocalPlayerController )
 			return;
 
-		CEntityHandle hPawn = pLocalPlayerController->GetPawn( );
-		m_pLocalPlayerPawn = static_cast< C_CSPlayerPawn* >( CTX::pCS2->pEntitySystem->GetEntityInstanceFromHandle( hPawn ) );
+		m_pLocalPlayerPawn = static_cast< C_CSPlayerPawn* >( CTX::pCS2->pEntitySystem->GetEntityInstanceFromHandle( pLocalPlayerController->GetPawn( ) ) );
 		if ( !m_pLocalPlayerPawn )
 			return;
 
@@ -89,7 +94,14 @@ namespace Features
 		if ( pPlayerPawn->GetTeam( ) == m_pLocalPlayerPawn->GetTeam( ) )
 			colRender = CTX::pConfig->ESP.colPlayerNameTeammate;
 
-		Core::pRender->Text( Math::Vector_t< float, 2 >( vecMins[ Axis::X ] + ( vecMaxs[ Axis::X ] - vecMins[ Axis::X ] ) * 0.5f, vecMaxs[ Axis::Y ] + 1.f ), pPlayerController->GetPlayerName( ), colRender, TEXT_RENDER_CENTERED_X );
+		Math::Vector_t< float, 2 > vecTextPosition = Math::Vector_t< float, 2 >( vecMins[ Axis::X ] + ( vecMaxs[ Axis::X ] - vecMins[ Axis::X ] ) * 0.5f, vecMaxs[ Axis::Y ] + 1.f );
+
+		const char* szPlayerName = pPlayerController->GetSanitizedPlayerName( ).Get( );
+
+		if ( !( pPlayerController->GetFlags( ) & FL_FAKECLIENT ) || !m_szBotLabel )
+			Core::pRender->Text( vecTextPosition, szPlayerName, colRender, TEXT_RENDER_CENTERED_X );
+		else
+			Core::pRender->Text( vecTextPosition, std::format( "{} {}", m_szBotLabel, szPlayerName ), colRender, TEXT_RENDER_CENTERED_X );
 	}
 
 	void CESP::PlayerSkeleton( C_CSPlayerPawn* pPlayerPawn, CSkeletonInstance* pSkeletonInstance ) noexcept
