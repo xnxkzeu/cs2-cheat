@@ -46,12 +46,16 @@ namespace Features
 		if ( !m_pLocalPlayerPawn )
 			return;
 
+		CEntityInstance* pObserverTarget = nullptr;
+		if ( CPlayer_ObserverServices* pObserverServices = m_pLocalPlayerPawn->GetObserverServices( ); pObserverServices && pObserverServices->GetObserverMode( ) == OBS_MODE_IN_EYE ) // @note / xnxkzeu: only valid when local player is dead
+			pObserverTarget = CTX::pCS2->pEntitySystem->GetEntityInstanceFromHandle( pObserverServices->GetObserverTarget( ) );
+
 		for ( C_CSPlayerPawn* pPlayerPawn : Core::pEntityList->GetPlayerPawns( ) )
 		{
-			if ( pPlayerPawn == m_pLocalPlayerPawn || !pPlayerPawn->IsAlive( ) )
+			if ( pPlayerPawn == m_pLocalPlayerPawn || pPlayerPawn == pObserverTarget || !pPlayerPawn->IsAlive( ) )
 				continue;
 
-			auto* pPlayerController = static_cast< CCSPlayerController* >( CTX::pCS2->pEntitySystem->GetEntityInstanceFromHandle( pPlayerPawn->GetController( ) ) );
+			const auto pPlayerController = static_cast< CCSPlayerController* >( CTX::pCS2->pEntitySystem->GetEntityInstanceFromHandle( pPlayerPawn->GetController( ) ) );
 			if ( !pPlayerController )
 				continue;
 
@@ -94,7 +98,7 @@ namespace Features
 		if ( pPlayerPawn->GetTeam( ) == m_pLocalPlayerPawn->GetTeam( ) )
 			colRender = CTX::pConfig->ESP.colPlayerNameTeammate;
 
-		Math::Vector_t< float, 2 > vecTextPosition = Math::Vector_t< float, 2 >( vecMins[ Axis::X ] + ( vecMaxs[ Axis::X ] - vecMins[ Axis::X ] ) * 0.5f, vecMaxs[ Axis::Y ] + 1.f );
+		const Math::Vector_t< float, 2 > vecTextPosition( vecMins[ Axis::X ] + ( vecMaxs[ Axis::X ] - vecMins[ Axis::X ] ) * 0.5f, vecMaxs[ Axis::Y ] + 1.f );
 
 		const char* szPlayerName = pPlayerController->GetSanitizedPlayerName( ).Get( );
 
@@ -115,21 +119,20 @@ namespace Features
 
 		const CModelState& modelState = pSkeletonInstance->GetModelState( );
 
-		const CModel* pModel = modelState.GetModel( );
-		if ( !pModel )
+		CStrongHandle< CModel > hModel = modelState.GetModel( );
+		if ( !hModel )
 			return;
 
 		const CTransform* pTransform = modelState.GetBoneTransformation( );
 
-		const CModelSkeleton& modelSkeleton = pModel->modelSkeleton;
+		const CModelSkeleton& modelSkeleton = hModel->modelSkeleton;
 		for ( std::uint16_t uBoneIndex = 0; uBoneIndex < modelSkeleton.vecBoneParent.Count( ); uBoneIndex++ )
 		{
-			std::uint16_t uParentBoneIndex = modelSkeleton.vecBoneParent[ uBoneIndex ];
+			const std::uint16_t uParentBoneIndex = modelSkeleton.vecBoneParent[ uBoneIndex ];
 			if ( uParentBoneIndex == static_cast< std::uint16_t >( -1 ) )
 				continue;
 
-			EBoneFlags uBoneFlags = modelSkeleton.vecBoneFlags[ uBoneIndex ];
-			if ( !( uBoneFlags & FLAG_HITBOX ) )
+			if ( !( modelSkeleton.vecBoneFlags[ uBoneIndex ] & FLAG_HITBOX ) )
 				continue;
 
 			Math::Vector_t< float, 2 > vecChild, vecParent;

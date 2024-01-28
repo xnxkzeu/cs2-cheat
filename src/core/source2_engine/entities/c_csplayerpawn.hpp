@@ -10,7 +10,6 @@ public:
 	C_CSPlayerPawn( ) = delete;
 	C_CSPlayerPawn( C_CSPlayerPawn&& ) = delete;
 	C_CSPlayerPawn( const C_CSPlayerPawn& ) = delete;
-
 };
 
 #endif // CS2_CHEAT_C_CSPLAYERPAWN_HPP

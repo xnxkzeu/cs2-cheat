@@ -45,7 +45,6 @@ private:
 	[[maybe_unused]] std::byte m_pad[ 0x10 ];
 };
 
-
 class CSchemaClassBindingBase
 {
 public:

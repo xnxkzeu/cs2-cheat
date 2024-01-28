@@ -73,6 +73,12 @@ add_library(cs2-cheat SHARED
 
     src/main.cpp)
 
+set_target_properties(cs2-cheat PROPERTIES
+    CXX_VISIBILITY_PRESET hidden
+    C_VISIBILITY_PRESET hidden
+    POSITION_INDEPENDENT_CODE ON
+)
+
 find_package(spdlog CONFIG REQUIRED)
 find_package(minhook CONFIG REQUIRED)
 find_package(Freetype CONFIG REQUIRED)

@@ -56,10 +56,10 @@ public:
 	C_BaseEntity( C_BaseEntity&& ) = delete;
 	C_BaseEntity( const C_BaseEntity& ) = delete;
 
-	VFUNC( 143, IsBasePlayerPawn( ), ( this ), bool );
-	VFUNC( 144, IsBasePlayerController( ), ( this ), bool );
-	VFUNC( 150, IsBasePlayerWeapon( ), ( this ), bool );
-	VFUNC( 242, IsViewModel( ), ( this ), bool );
+	VFUNC( 144, IsBasePlayerPawn( ), ( this ), bool );
+	VFUNC( 145, IsBasePlayerController( ), ( this ), bool );
+	VFUNC( 151, IsBasePlayerWeapon( ), ( this ), bool );
+	VFUNC( 245, IsViewModel( ), ( this ), bool );
 
 	SCHEMA_VARIABLE( "C_BaseEntity->m_pGameSceneNode", GetGameSceneNode, CGameSceneNode* );
 	SCHEMA_VARIABLE( "C_BaseEntity->m_pRenderComponent", GetRenderComponent, CRenderComponent* );

@@ -38,7 +38,7 @@ namespace Core
 	void* CHooks::HookFunction( void* pfnTarget, void* pfnDetour )
 	{
 		void* pfnOriginal = nullptr;
-		if ( MH_STATUS mhStatus = MH_CreateHook( pfnTarget, pfnDetour, &pfnOriginal ); mhStatus != MH_OK )
+		if ( const MH_STATUS mhStatus = MH_CreateHook( pfnTarget, pfnDetour, &pfnOriginal ); mhStatus != MH_OK )
 			throw std::runtime_error( std::vformat( xorstr_( "failed to hook function: {}" ), std::make_format_args( MH_StatusToString( mhStatus ) ) ) );
 
 		return pfnOriginal;
@@ -47,7 +47,7 @@ namespace Core
 	void* CHooks::HookVirtualFunction( void* pInstance, std::uint32_t uIndex, void* pfnDetour )
 	{
 		void* pfnOriginal = nullptr;
-		if ( MH_STATUS mhStatus = MH_CreateHook( ( *reinterpret_cast< void*** >( pInstance ) )[ uIndex ], pfnDetour, &pfnOriginal ); mhStatus != MH_OK )
+		if ( const MH_STATUS mhStatus = MH_CreateHook( ( *reinterpret_cast< void*** >( pInstance ) )[ uIndex ], pfnDetour, &pfnOriginal ); mhStatus != MH_OK )
 			throw std::runtime_error( std::vformat( xorstr_( "Failed to hook virtual function: {}" ), std::make_format_args( MH_StatusToString( mhStatus ) ) ) );
 
 		return pfnOriginal;

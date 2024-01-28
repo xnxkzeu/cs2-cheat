@@ -13,17 +13,14 @@ public:
 	{
 	}
 
-	constexpr CEntityHandle( const CEntityHandle& hOther ) noexcept
-		: m_uHandle( hOther.m_uHandle )
-	{
-	}
+	constexpr CEntityHandle( const CEntityHandle& hOther ) = default;
 
-	constexpr bool IsValid( ) const noexcept
+	[[nodiscard]] constexpr bool IsValid( ) const noexcept
 	{
 		return m_uHandle != INVALID_EHANDLE;
 	}
 
-	constexpr int GetEntryIndex( ) const noexcept
+	[[nodiscard]] constexpr int GetEntryIndex( ) const noexcept
 	{
 		return static_cast< int >( static_cast< std::uint16_t >( m_uHandle ) & 0x7FFF );
 	}

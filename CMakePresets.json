@@ -3,7 +3,7 @@
   "configurePresets": [
     {
       "name": "base",
-      "binaryDir": "${sourceDir}/build",
+      "binaryDir": "${sourceDir}/build/${presetName}",
       "hidden": true,
       "generator": "Ninja",
       "cacheVariables": {
@@ -22,7 +22,6 @@
       "name": "debug",
       "displayName": "Debug",
       "inherits": "base",
-      "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       }
@@ -31,7 +30,6 @@
       "name": "release",
       "displayName": "Release",
       "inherits": "base",
-      "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "MinSizeRel"
       }

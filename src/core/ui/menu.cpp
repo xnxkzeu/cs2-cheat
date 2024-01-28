@@ -40,7 +40,7 @@ namespace Core::UI
 
 	void RenderTabs( std::span< const std::string_view > spanTabNames, std::size_t& uActiveTab ) noexcept
 	{
-		ImVec2 vecButtonSize = ImVec2( ( ImGui::GetWindowContentRegionMax( ).x - ImGui::GetWindowContentRegionMin( ).x ) / spanTabNames.size( ) - ( ImGui::GetStyle( ).ItemSpacing.x / spanTabNames.size( ) * ( spanTabNames.size( ) - 1 ) ), 0.f );
+		const ImVec2 vecButtonSize( ( ImGui::GetWindowContentRegionMax( ).x - ImGui::GetWindowContentRegionMin( ).x ) / spanTabNames.size( ) - ( ImGui::GetStyle( ).ItemSpacing.x / spanTabNames.size( ) * ( spanTabNames.size( ) - 1 ) ), 0.f );
 
 		for ( std::size_t uTabIndex = 0; uTabIndex < spanTabNames.size( ); uTabIndex++ )
 		{
@@ -83,13 +83,13 @@ namespace Core::UI
 					ImGui::SameLine( 250.f );
 
 					{
-						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( static_cast< ImU32 >( CTX::pConfig->ESP.colPlayerBoxEnemy ) );
+						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( CTX::pConfig->ESP.colPlayerBoxEnemy );
 						if ( ImGui::ColorEdit4( "Enemy##Box", &vecColor.x, ImGuiColorEditFlags_NoInputs ) )
 							CTX::pConfig->ESP.colPlayerBoxEnemy = ImGui::ColorConvertFloat4ToU32( vecColor );
 					}
 					ImGui::SameLine( 450.f );
 					{
-						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( static_cast< ImU32 >( CTX::pConfig->ESP.colPlayerBoxTeammate ) );
+						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( CTX::pConfig->ESP.colPlayerBoxTeammate );
 						if ( ImGui::ColorEdit4( "Teammate##Box", &vecColor.x, ImGuiColorEditFlags_NoInputs ) )
 							CTX::pConfig->ESP.colPlayerBoxTeammate = ImGui::ColorConvertFloat4ToU32( vecColor );
 					}
@@ -97,13 +97,13 @@ namespace Core::UI
 					ImGui::SameLine( 250.f );
 
 					{
-						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( static_cast< ImU32 >( CTX::pConfig->ESP.colPlayerNameEnemy ) );
+						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( CTX::pConfig->ESP.colPlayerNameEnemy );
 						if ( ImGui::ColorEdit4( "Enemy##Name", &vecColor.x, ImGuiColorEditFlags_NoInputs ) )
 							CTX::pConfig->ESP.colPlayerNameEnemy = ImGui::ColorConvertFloat4ToU32( vecColor );
 					}
 					ImGui::SameLine( 450.f );
 					{
-						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( static_cast< ImU32 >( CTX::pConfig->ESP.colPlayerNameTeammate ) );
+						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( CTX::pConfig->ESP.colPlayerNameTeammate );
 						if ( ImGui::ColorEdit4( "Teammate##Name", &vecColor.x, ImGuiColorEditFlags_NoInputs ) )
 							CTX::pConfig->ESP.colPlayerNameTeammate = ImGui::ColorConvertFloat4ToU32( vecColor );
 					}
@@ -111,13 +111,13 @@ namespace Core::UI
 					ImGui::SameLine( 250.f );
 
 					{
-						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( static_cast< ImU32 >( CTX::pConfig->ESP.colPlayerSkeletonEnemy ) );
+						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( CTX::pConfig->ESP.colPlayerSkeletonEnemy );
 						if ( ImGui::ColorEdit4( "Enemy##Skeleton", &vecColor.x, ImGuiColorEditFlags_NoInputs ) )
 							CTX::pConfig->ESP.colPlayerSkeletonEnemy = ImGui::ColorConvertFloat4ToU32( vecColor );
 					}
 					ImGui::SameLine( 450.f );
 					{
-						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( static_cast< ImU32 >( CTX::pConfig->ESP.colPlayerSkeletonTeammate ) );
+						ImVec4 vecColor = ImGui::ColorConvertU32ToFloat4( CTX::pConfig->ESP.colPlayerSkeletonTeammate );
 						if ( ImGui::ColorEdit4( "Teammate##Skeleton", &vecColor.x, ImGuiColorEditFlags_NoInputs ) )
 							CTX::pConfig->ESP.colPlayerSkeletonTeammate = ImGui::ColorConvertFloat4ToU32( vecColor );
 					}
